@@ -404,5 +404,209 @@ export const questionBank: Question[] = [
     correcta: 2,
     explicacion: "Nunca se debe retroceder o girar en U en una autopista; se debe buscar el siguiente retorno legal.",
     categoria: "Conducción defensiva"
+  },
+  {
+    id: 51,
+    pregunta: "Para realizar un manejo preventivo es importante:",
+    opciones: [
+      "Observar constantemente lo que ocurre en las vías, anticipar las maniobras de los demás usuarios de la vía y dominar el espacio con una distancia de seguimiento adecuada.",
+      "Manejar lo más rápidamente posible para llegar antes a nuestro destino.",
+      "Tener siempre activadas las luces largas o de carretera para que los demás usuarios de la vía nos vean."
+    ],
+    correcta: 0,
+    explicacion: "El manejo preventivo se basa en la observación, anticipación y mantenimiento de una distancia de seguridad.",
+    categoria: "Conducción defensiva"
+  },
+  {
+    id: 52,
+    pregunta: "¿Cuál de los siguientes es uno de los efectos del estrés en la conducción?",
+    opciones: [
+      "Decisiones más lentas y erróneas.",
+      "Disminución de la agresividad.",
+      "Menos agotamiento y fatiga."
+    ],
+    correcta: 0,
+    explicacion: "El estrés afecta negativamente la capacidad de juicio y aumenta el tiempo de reacción.",
+    categoria: "Salud vial"
+  },
+  {
+    id: 53,
+    pregunta: "Para obtener una licencia de conducir de la categoría 02, se requiere el cumplimiento de la siguiente disposición entre otras:",
+    opciones: [
+      "Ser declarado apto por el INTRANT en las pruebas teóricas específicas y pruebas prácticas de evaluación de aptitudes motoras y/o comportamentales.",
+      "Haber manejado un vehículo.",
+      "Tener un vehículo propio."
+    ],
+    correcta: 0,
+    explicacion: "La ley exige aprobar tanto el examen teórico como el práctico ante la autoridad competente (INTRANT).",
+    categoria: "Reglamentación"
+  },
+  {
+    id: 54,
+    pregunta: "La misión de los airbags en caso de accidente es:",
+    opciones: [
+      "Aumentar el riesgo por cortaduras de cristal, por eso hay que llevarlo siempre apagado.",
+      "Proteger en caso de no llevar cinturón.",
+      "Que la parte superior del cuerpo no impacte contra el volante, parabrisas o salpicadero."
+    ],
+    correcta: 2,
+    explicacion: "El airbag es un sistema de seguridad pasiva diseñado para amortiguar el impacto de los ocupantes contra las partes rígidas del vehículo.",
+    categoria: "Seguridad pasiva"
+  },
+  {
+    id: 55,
+    pregunta: "El sistema de iluminación de un vehículo, ¿qué función tiene?",
+    opciones: [
+      "Hace funcionar la batería.",
+      "Proporcionar una fuente de iluminación únicamente para poder ver.",
+      "Poder ver, ser vistos y señalizar maniobras."
+    ],
+    correcta: 2,
+    explicacion: "Las luces no solo sirven para que el conductor vea, sino también para que otros usuarios lo identifiquen y entiendan sus intenciones.",
+    categoria: "Seguridad activa"
+  },
+  {
+    id: 56,
+    pregunta: "Para trazar una curva de manera adecuada:",
+    opciones: [
+      "Hay que acercarse por la parte interior de la misma y reduciendo la velocidad, en el punto medio acercarse al vértice externo y frenar al salir de la curva.",
+      "Hay que acercarse por la parte exterior de la misma y reduciendo la velocidad, en el punto medio acercarse al vértice interno y al salir de la curva acelerar para acercarnos al lado externo de la carretera.",
+      "Hay que acelerar al acercarse a la curva y frenar en el punto medio."
+    ],
+    correcta: 1,
+    explicacion: "La técnica correcta implica entrar por fuera, buscar el ápice (interior) y salir aprovechando el ancho de la vía.",
+    categoria: "Conducción defensiva"
+  },
+  {
+    id: 57,
+    pregunta: "Las señales de tránsito se clasifican en…:",
+    opciones: [
+      "Verticales, horizontales y semáforos.",
+      "Reglamentarias, preventivas e informativas.",
+      "Agentes y circunstanciales."
+    ],
+    correcta: 1,
+    explicacion: "Esta es la clasificación principal por su función: obligar (reglamentarias), advertir (preventivas) o guiar (informativas).",
+    categoria: "Señales de tránsito"
+  },
+  {
+    id: 58,
+    pregunta: "¿Tiene alguna obligación un conductor cuando su vehículo va a ser alcanzado?",
+    opciones: [
+      "No, la responsabilidad es del vehículo que adelanta.",
+      "Sí, moverse a su izquierda lo más posible para permitir prudentemente la maniobra del otro vehículo.",
+      "Sí, reducir la velocidad y moverse a su derecha."
+    ],
+    correcta: 2,
+    explicacion: "El conductor que va a ser adelantado debe facilitar la maniobra ciñéndose a la derecha y no aumentando la velocidad.",
+    categoria: "Reglamentación"
+  },
+  {
+    id: 59,
+    pregunta: "El seguro obligatorio, ¿cubre la responsabilidad civil del conductor que, con motivo de los hechos de la circulación, cause daños a las personas (daños corporales) o a los bienes (daños materiales)?",
+    opciones: [
+      "Sí, salvo cuando el conductor es el tomador del seguro.",
+      "Sí, dentro de unos límites.",
+      "No."
+    ],
+    correcta: 1,
+    explicacion: "El seguro de ley cubre daños a terceros hasta los límites establecidos en la póliza contratada.",
+    categoria: "Reglamentación"
+  },
+  {
+    id: 60,
+    pregunta: "Si el Agente de Tránsito se sitúa de frente y con el brazo verticalmente está indicando una señal…",
+    opciones: [
+      "De PARE, que obliga a detenerse.",
+      "De precaución, el derecho de paso se va a terminar.",
+      "De paso, los conductores pueden comenzar a circular."
+    ],
+    correcta: 0,
+    explicacion: "El brazo levantado verticalmente por un agente indica detención obligatoria para todos los usuarios que se aproximen.",
+    categoria: "Prioridad de paso"
+  },
+  {
+    id: 61,
+    pregunta: "Los vehículos pueden transitar por:",
+    opciones: [
+      "La plataforma de la vía y los carriles.",
+      "La calzada, con exclusión de los paseos.",
+      "Los paseos, arcenes o márgenes de la carretera y contenes."
+    ],
+    correcta: 1,
+    explicacion: "Los vehículos deben circular por la calzada; los paseos o arcenes son para emergencias o usuarios específicos.",
+    categoria: "Reglamentación"
+  },
+  {
+    id: 62,
+    pregunta: "Ante una señal de PARE:",
+    opciones: [
+      "Los conductores deberán reducir la velocidad de la marcha del vehículo y detenerse antes de entrar en la intersección, pero no cederá el paso a todo vehículo que se acerque por la otra vía.",
+      "Los conductores se detendrán lo más cerca posible de la intersección y antes de llegar al paso de peatones.",
+      "Los conductores deberán reducir la velocidad de la marcha del vehículo y en caso de que fuera necesario se detendrá antes de entrar en la intersección y cederá el paso a todo vehículo que se acerque por la otra vía."
+    ],
+    correcta: 1,
+    explicacion: "La detención debe ser total y realizarse antes de la línea de pare o el paso peatonal.",
+    categoria: "Señales de tránsito"
+  },
+  {
+    id: 63,
+    pregunta: "¿De qué color son las marcas de pavimento que indican las líneas centrales de una vía de dos carriles de direcciones opuestas?",
+    opciones: [
+      "Blancas.",
+      "Amarillas.",
+      "Azules."
+    ],
+    correcta: 1,
+    explicacion: "El color amarillo se utiliza para separar flujos de tráfico que circulan en direcciones opuestas.",
+    categoria: "Señales de tránsito"
+  },
+  {
+    id: 64,
+    pregunta: "Los medicamentos y enfermedades pueden afectar a las capacidades básicas a la hora de conducir de forma segura. ¿Qué enfermedades de las siguientes representan un mayor riesgo?",
+    opciones: [
+      "Los síntomas de la gripe y los resfriados.",
+      "Las enfermedades mentales y los trastornos neurológicos.",
+      "Las alergias."
+    ],
+    correcta: 1,
+    explicacion: "Los trastornos neurológicos y mentales pueden alterar gravemente la percepción y el control del vehículo.",
+    categoria: "Salud vial"
+  },
+  {
+    id: 65,
+    pregunta: "A medida que aumenta la velocidad de conducción:",
+    opciones: [
+      "La capacidad de observar y analizar lo que sucede a nuestro alrededor será menor.",
+      "Disminuyen los comportamientos agresivos, lo que implica mayor tensión.",
+      "Se decelera la aparición de la fatiga."
+    ],
+    correcta: 0,
+    explicacion: "A mayor velocidad, se produce el 'efecto túnel', reduciendo el campo de visión periférica.",
+    categoria: "Velocidades"
+  },
+  {
+    id: 66,
+    pregunta: "Los sistemas de seguridad activa:",
+    opciones: [
+      "Son las habilidades del conductor para evitar el accidente.",
+      "Son el conjunto de características técnicas de los vehículos cuyo objetivo es la pérdida de control de su trayectoria y la colisión.",
+      "Evitan o disminuyen los daños que se producen en los accidentes."
+    ],
+    correcta: 2,
+    explicacion: "La seguridad activa comprende los elementos que ayudan a evitar que el accidente ocurra (frenos, luces, etc.).",
+    categoria: "Seguridad activa"
+  },
+  {
+    id: 67,
+    pregunta: "¿De qué color son las luces cortas o de cruce?",
+    opciones: [
+      "Son de color rojo.",
+      "Son de color azul (lateral), verde (traseros) y blanco (delanteros).",
+      "Son de color blancas."
+    ],
+    correcta: 2,
+    explicacion: "Las luces delanteras de cruce deben ser de color blanco para iluminar la vía sin deslumbrar.",
+    categoria: "Seguridad activa"
   }
 ];
