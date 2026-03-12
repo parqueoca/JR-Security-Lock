@@ -17,9 +17,13 @@ import {
   Info,
   AlertTriangle,
   Award,
-  ArrowLeft
+  ArrowLeft,
+  User,
+  History,
+  Trash2,
+  Calendar
 } from 'lucide-react';
-import { Question, ExamState, ExamStatus } from './types';
+import { Question, ExamState, ExamStatus, ExamAttempt } from './types';
 import { questionBank } from './questions';
 
 const EXAM_TIME = 30 * 60; // 30 minutes in seconds
@@ -36,6 +40,61 @@ export default function App() {
   });
 
   const [showReview, setShowReview] = useState(false);
+  const [userName, setUserName] = useState<string>('');
+  const [history, setHistory] = useState<ExamAttempt[]>([]);
+  const [nameInput, setNameInput] = useState('');
+
+  // Load data from localStorage
+  useEffect(() => {
+    const savedName = localStorage.getItem('jr_security_user_name');
+    const savedHistory = localStorage.getItem('jr_security_history');
+    
+    if (savedName) {
+      setUserName(savedName);
+    } else {
+      setState(prev => ({ ...prev, status: 'welcome' }));
+    }
+
+    if (savedHistory) {
+      try {
+        setHistory(JSON.parse(savedHistory));
+      } catch (e) {
+        console.error("Error parsing history", e);
+      }
+    }
+  }, []);
+
+  const saveName = () => {
+    if (nameInput.trim()) {
+      setUserName(nameInput.trim());
+      localStorage.setItem('jr_security_user_name', nameInput.trim());
+      setState(prev => ({ ...prev, status: 'idle' }));
+    }
+  };
+
+  const saveAttempt = (results: any) => {
+    const newAttempt: ExamAttempt = {
+      id: Date.now().toString(),
+      date: new Date().toISOString(),
+      score: results.percentage,
+      correct: results.correct,
+      total: state.questions.length,
+      passed: results.passed,
+      timeSpent: EXAM_TIME - state.timeLeft,
+      mode: state.status as 'exam' | 'study'
+    };
+
+    const newHistory = [newAttempt, ...history].slice(0, 50); // Keep last 50
+    setHistory(newHistory);
+    localStorage.setItem('jr_security_history', JSON.stringify(newHistory));
+  };
+
+  const clearHistory = () => {
+    if (window.confirm('¿Estás seguro de que quieres borrar todo tu historial?')) {
+      setHistory([]);
+      localStorage.removeItem('jr_security_history');
+    }
+  };
 
   // Initialize exam
   const startExam = useCallback((mode: ExamStatus = 'exam') => {
@@ -79,6 +138,8 @@ export default function App() {
     if (state.currentQuestionIndex < state.questions.length - 1) {
       setState(prev => ({ ...prev, currentQuestionIndex: prev.currentQuestionIndex + 1 }));
     } else if (state.status === 'exam') {
+      const results = calculateResults();
+      saveAttempt(results);
       setState(prev => ({ ...prev, status: 'finished' }));
     }
   };
@@ -106,6 +167,44 @@ export default function App() {
     return { correct, incorrect: total - correct, percentage, passed };
   };
 
+  // Render Welcome Screen
+  if (state.status === 'welcome') {
+    return (
+      <div className="min-h-screen bg-[#F3F4F6] flex flex-col items-center justify-center p-4 font-sans">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 space-y-6 text-center"
+        >
+          <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto">
+            <User className="w-10 h-10 text-[#003876]" />
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold text-gray-800">¡Bienvenido!</h1>
+            <p className="text-gray-500">Para personalizar tu experiencia, dinos tu nombre:</p>
+          </div>
+          <div className="space-y-4">
+            <input 
+              type="text" 
+              value={nameInput}
+              onChange={(e) => setNameInput(e.target.value)}
+              placeholder="Escribe tu nombre aquí..."
+              className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-[#003876] outline-none transition-all text-center font-bold text-lg"
+              onKeyDown={(e) => e.key === 'Enter' && saveName()}
+            />
+            <button 
+              onClick={saveName}
+              disabled={!nameInput.trim()}
+              className="w-full bg-[#003876] hover:bg-[#002a5a] disabled:opacity-50 text-white font-bold py-4 rounded-2xl transition-all shadow-lg"
+            >
+              COMENZAR
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   // Render Start Screen
   if (state.status === 'idle') {
     return (
@@ -115,7 +214,14 @@ export default function App() {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-md w-full bg-white rounded-3xl shadow-xl overflow-hidden"
         >
-          <div className="bg-[#003876] p-8 text-white text-center">
+          <div className="bg-[#003876] p-8 text-white text-center relative">
+            <button 
+              onClick={() => setState(prev => ({ ...prev, status: 'welcome' }))}
+              className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+              title="Cambiar nombre"
+            >
+              <User className="w-4 h-4" />
+            </button>
             <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <img 
                 src="https://picsum.photos/seed/driving/200/200" 
@@ -124,8 +230,11 @@ export default function App() {
                 referrerPolicy="no-referrer"
               />
             </div>
-            <h1 className="text-2xl font-bold mb-2">JR Security Lock</h1>
-            <p className="text-blue-100 text-sm">Simulador Examen Teórico INTRANT</p>
+            <h1 className="text-2xl font-bold mb-1">JR Security Lock</h1>
+            <p className="text-blue-100 text-xs mb-4">Simulador Examen Teórico INTRANT</p>
+            <div className="bg-white/10 py-2 px-4 rounded-full inline-block">
+              <p className="text-sm font-medium">¡Hola, <span className="font-bold">{userName}</span>!</p>
+            </div>
           </div>
           
           <div className="p-8 space-y-6">
@@ -165,6 +274,15 @@ export default function App() {
                 <BookOpen className="w-5 h-5" />
                 MODO ESTUDIO
               </button>
+              {history.length > 0 && (
+                <button 
+                  onClick={() => setState(prev => ({ ...prev, status: 'history' }))}
+                  className="w-full bg-gray-50 text-gray-600 hover:bg-gray-100 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 active:scale-95"
+                >
+                  <History className="w-5 h-5" />
+                  VER MI PROGRESO ({history.length})
+                </button>
+              )}
             </div>
           </div>
         </motion.div>
@@ -441,6 +559,75 @@ export default function App() {
               </motion.div>
             )}
           </AnimatePresence>
+        </div>
+      </div>
+    );
+  }
+
+  // Render History Screen
+  if (state.status === 'history') {
+    return (
+      <div className="min-h-screen bg-[#F3F4F6] p-4 md:p-8 font-sans">
+        <div className="max-w-2xl mx-auto space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setState(prev => ({ ...prev, status: 'idle' }))}
+                className="p-2 bg-white hover:bg-gray-100 rounded-full shadow-sm transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5 text-gray-600" />
+              </button>
+              <h1 className="text-2xl font-bold text-gray-800">Mi Progreso</h1>
+            </div>
+            <button 
+              onClick={clearHistory}
+              className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors"
+              title="Borrar historial"
+            >
+              <Trash2 className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {history.map((attempt) => (
+              <motion.div 
+                key={attempt.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex items-center justify-between"
+              >
+                <div className="flex items-center gap-4">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${attempt.passed ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+                    {attempt.passed ? <Award className="w-6 h-6" /> : <AlertTriangle className="w-6 h-6" />}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="font-bold text-gray-800">{attempt.score}%</p>
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${attempt.mode === 'exam' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700'}`}>
+                        {attempt.mode === 'exam' ? 'Examen' : 'Estudio'}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-gray-400 mt-1">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        {new Date(attempt.date).toLocaleDateString()}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Timer className="w-3 h-3" />
+                        {formatTime(attempt.timeSpent)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Resultado</p>
+                  <p className={`font-black ${attempt.passed ? 'text-green-600' : 'text-red-600'}`}>
+                    {attempt.passed ? 'APROBADO' : 'FALLIDO'}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     );
