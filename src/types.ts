@@ -7,7 +7,18 @@ export interface Question {
   categoria?: string;
 }
 
-export type ExamStatus = 'idle' | 'exam' | 'study' | 'finished';
+export interface ExamAttempt {
+  id: string;
+  date: string;
+  score: number;
+  correct: number;
+  total: number;
+  passed: boolean;
+  timeSpent: number; // in seconds
+  mode: 'exam' | 'study';
+}
+
+export type ExamStatus = 'welcome' | 'idle' | 'exam' | 'study' | 'finished' | 'history';
 
 export interface ExamState {
   questions: Question[];
