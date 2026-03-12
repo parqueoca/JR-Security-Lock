@@ -64,10 +64,18 @@ export default function App() {
     }
   }, []);
 
+  const formatName = (name: string) => {
+    return name
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+
   const saveName = () => {
     if (nameInput.trim()) {
-      setUserName(nameInput.trim());
-      localStorage.setItem('jr_security_user_name', nameInput.trim());
+      const formattedName = formatName(nameInput.trim());
+      setUserName(formattedName);
+      localStorage.setItem('jr_security_user_name', formattedName);
       setState(prev => ({ ...prev, status: 'idle' }));
     }
   };
@@ -181,13 +189,14 @@ export default function App() {
           </div>
           <div className="space-y-2">
             <h1 className="text-2xl font-bold text-gray-800">¡Bienvenido!</h1>
-            <p className="text-gray-500">Para personalizar tu experiencia, dinos tu nombre:</p>
+            <p className="text-gray-500 font-medium">Simulador para examen para licencia de conducir en RD</p>
+            <p className="text-sm text-gray-400">Para personalizar tu experiencia, dinos tu nombre:</p>
           </div>
           <div className="space-y-4">
             <input 
               type="text" 
               value={nameInput}
-              onChange={(e) => setNameInput(e.target.value)}
+              onChange={(e) => setNameInput(formatName(e.target.value))}
               placeholder="Escribe tu nombre aquí..."
               className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-[#003876] outline-none transition-all text-center font-bold text-lg"
               onKeyDown={(e) => e.key === 'Enter' && saveName()}
@@ -231,7 +240,8 @@ export default function App() {
               />
             </div>
             <h1 className="text-2xl font-bold mb-1">JR Security Lock</h1>
-            <p className="text-blue-100 text-xs mb-4">Simulador Examen Teórico INTRANT</p>
+            <p className="text-blue-100 text-xs mb-1">Simulador para examen para licencia de conducir en RD</p>
+            <p className="text-blue-200/60 text-[10px] mb-4 uppercase tracking-widest font-bold">República Dominicana</p>
             <div className="bg-white/10 py-2 px-4 rounded-full inline-block">
               <p className="text-sm font-medium">¡Hola, <span className="font-bold">{userName}</span>!</p>
             </div>
